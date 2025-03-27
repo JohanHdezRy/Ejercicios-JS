@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temas</title>
+    <link href="estilo.css" rel="stylesheet">
+</head>
+
+ <body>
+ <div class="container mt-5 col-4">
+    <h1 class="text-center">Materias</h1>
+    <form id="form" class="buttons">
+        <button type="button" data-type="Programación básica">🎮</button>
+        <button type="button" data-type="Estructuras de datos">🧩</button>
+        <button type="button" data-type="Programación Orientada a Objetos">🕹️</button>
+    </form>
+ </div>
+ <div id="Container"></div>
+ <script>
+  document.querySelectorAll("#form button").forEach(button => {
+    button.addEventListener("click", async (event) => {
+      const type = event.target.getAttribute("data-type").toLowerCase();
+      
+      // Simulación de datos (reemplázalo con tu fetch real)
+      const temasJson = {
+        "programación básica": {
+          nombre: "Programación Básica",
+          descripción: "Fundamentos de algoritmos y sintaxis.",
+          conceptos: {
+            temas: ["Variables", "Bucles", "Condicionales"],
+            dificultad: "Principiante"
+          },
+          recursos: [
+            { tipo: "Libro", nombre: "Introducción a la Programación" },
+            { tipo: "Video", nombre: "Tutoriales Básicos" }
+          ]
+        },
+        "estructuras de datos": {
+          nombre: "Estructuras de Datos",
+          descripción: "Estructuras fundamentales para manejo de datos.",
+          conceptos: {
+            temas: ["Arrays", "Listas Enlazadas", "Árboles"],
+            dificultad: "Intermedio"
+          }
+        },
+        "programación orientada a objetos": {
+          nombre: "Programación Orientada a Objetos",
+          descripción: "Principios de OOP y diseño de clases.",
+          conceptos: {
+            temas: ["Clases", "Objetos", "Herencia"],
+            dificultad: "Avanzado"
+          },
+          recursos: [
+            { tipo: "Libro", nombre: "Diseño de Software" },
+            { tipo: "Video", nombre: "OOP en JavaScript" }
+          ]
+        }
+      };
+
+      const tema = temasJson[type]; 
+      const contenedor = document.getElementById("Container"); 
+
+      if (!tema) {
+        contenedor.innerHTML = "<h2>Tema no encontrado</h2>";
+      } else {
+        contenedor.innerHTML = `
+          <h2>${tema.nombre}</h2>
+          <p><strong>Descripción:</strong> ${tema.descripción}</p>
+          <h3>Conceptos clave:</h3>
+          <ul>
+            ${tema.conceptos.temas.map(tema => `<li>${tema}</li>`).join("")}
+          </ul>
+          <p><strong>Dificultad:</strong> ${tema.conceptos.dificultad}</p>
+          ${tema.recursos ? `
+            <h3>Recursos:</h3>
+            <ul>
+              ${tema.recursos.map(recurso => `<li>${recurso.tipo}: ${recurso.nombre}</li>`).join("")}
+            </ul>
+          ` : ""}
+        `;
+      }
+    });
+  });
+</script>
+ </body>   
+ </html>
